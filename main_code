@@ -1,0 +1,164 @@
+
+#include <iostream>
+#include <limits>
+#include <string>
+
+using namespace std;
+
+class person {
+    int age;
+    char name[50];
+public:
+    void input_details() {
+        cout << "Enter Name:" << endl;
+        cin >> name;
+        std::cout << "Enter your age: ";
+        std::cin >> age;
+        while(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+            std::cout << "Enter a NUMBER: ";
+            std::cin >> age;
+        }
+    }
+    void print_details();
+};
+void person::print_details() {
+    cout << "Name: " << name << "\n";
+    cout << "Age: " << age << "\n";
+}
+
+float hours_in_float() {
+    float credit_hours;
+    string credit_hours_inputed;
+    bool should_be_true_hours = false;
+    while (!should_be_true_hours) {
+        cout << "Credit hours for this class (1, 2, 3, or 4): ";
+        cin >> credit_hours_inputed;
+        if (credit_hours_inputed == "1") {
+            credit_hours = 1;
+            should_be_true_hours = true;
+        } else if (credit_hours_inputed == "2") {
+            credit_hours = 2;
+            should_be_true_hours = true;
+        } else if (credit_hours_inputed == "3") {
+            credit_hours = 3;
+            should_be_true_hours = true;
+        } else if (credit_hours_inputed == "4") {
+            credit_hours = 4;
+            should_be_true_hours = true;
+        } else {
+            cout << "Please enter hours.\n";
+            should_be_true_hours = false;
+        }
+    }
+    return credit_hours;
+}
+
+void calc_year() {
+    string year;
+    int academic_class, *ptr1;
+    bool should_be_true_year = false;
+    while (!should_be_true_year) {
+        cout << "Enter academic class (freshman, sophomore etc): ";
+        cin >> year;
+        if (year == "Freshman" || year == "freshman") {
+            academic_class = 3;
+            should_be_true_year = true;
+        } else if (year == "Sophomore" || year == "sophomore") {
+            academic_class = 2;
+            should_be_true_year = true;
+        } else if (year == "Junior" || year == "junior") {
+            academic_class = 1;
+            should_be_true_year = true;
+        } else if (year == "Senior" || year == "senior") {
+            academic_class = 0;
+            should_be_true_year = true;
+        } else {
+            cout << "Please enter an academic class.\n";
+            should_be_true_year = false;
+        }
+        ptr1 = &academic_class;
+        cout << "You are supposed to graduate in " << *ptr1 << " years as a " << year << "\n";
+    }
+}
+
+
+double grade_in_4_format(double credit_hours) {
+    double grade_in_decimal;
+    string grade_input;
+    bool should_be_true_grade = false;
+    while (!should_be_true_grade) {
+        cout << "Enter grade A through F: ";
+        cin >> grade_input;
+        if (grade_input == "A") {
+            grade_in_decimal = 4.0 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "A-") {
+            grade_in_decimal = 3.7 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "B+") {
+            grade_in_decimal = 3.3 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "B") {
+            grade_in_decimal = 3.0 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "B-") {
+            grade_in_decimal = 2.7 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "C+") {
+            grade_in_decimal = 2.3 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "C") {
+            grade_in_decimal = 2.0 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "C-") {
+            grade_in_decimal = 1.7 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "D+") {
+            grade_in_decimal = 1.3 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "D") {
+            grade_in_decimal = 1.0 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "D-") {
+            grade_in_decimal = 0.7 * credit_hours;
+            should_be_true_grade = true;
+        } else if (grade_input == "F") {
+            grade_in_decimal = 0.0;
+            should_be_true_grade = true;
+        } else {
+            cout << "Please enter a real grade.\n";
+            should_be_true_grade = false;
+        }
+    }
+    return grade_in_decimal;
+}
+
+int main() {
+    int classes;
+    double gpa, total_points = 0.0, total_hours = 0.0;
+    cout << "This is a GPA Calculator...\n";
+
+    person p{};
+    p.input_details();
+    p.print_details();
+
+    calc_year();
+
+    cout << "Number of classes taking right now: ";
+    cin >> classes;
+
+    for (int j = 0; j < classes; j++) {
+        total_hours += hours_in_float();
+        cout << "\nRepeat to make sure:\n";
+        total_points += grade_in_4_format(hours_in_float());
+    }
+    cout << "\nCredit hours: " << total_hours;
+    cout << "\nTotal point hours: " << total_points;
+
+    gpa = total_points / total_hours;
+    cout << "\nGPA: " << gpa << "\n";
+    return 0;
+}
+
